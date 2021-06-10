@@ -1,11 +1,17 @@
 package com.example.filestorageback.service.impl;
 
+import com.example.filestorageback.dto.FileMetaDTO;
+import com.example.filestorageback.repository.FileMetaProvider;
+import com.example.filestorageback.repository.FileSystemProvider;
 import com.example.filestorageback.service.FileStoreService;
+import com.example.filestorageback.utils.HashHelper;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Collection;
 import java.util.UUID;
 
 @Component
@@ -23,7 +29,7 @@ public class FileStoreServiceImpl implements FileStoreService {
 
         String filename = fileMetaProvider.checkFileExists(md5);
         if (filename == null) {
-            fileMetaProvider.saveFileMeta(md5, fileName, subFileType);
+            fileMetaProvider.saveFileMeta(md5, fileName, subFileType, content.length);
             filename = systemProvider.storeFile(content, md5, fileName);
         }
 
