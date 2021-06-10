@@ -1,0 +1,26 @@
+version: '3.2'
+
+volumes:
+  files:
+    driver: local
+
+networks:
+  postgres:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:9.5
+    container_name: files
+    volumes:
+      - type: volume
+        source: files
+        target: /var/lib/postgresql/dataConfig
+    networks:
+      - postgres
+    environment:
+      POSTGRES_DB: files
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespass
+    ports:
+      - "5435:5432"
